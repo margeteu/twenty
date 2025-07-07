@@ -1131,6 +1131,15 @@ export class ConfigVariables {
   @IsOptionalOrEmptyString()
   @IsTwentySemVer()
   APP_VERSION?: string;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.MicrosoftAuth,
+    isSensitive: false,
+    description: 'Tenant for Microsoft authentication (e.g. "common", tenant ID, or domain)',
+    type: ConfigVariableType.STRING,
+  })
+  @ValidateIf((env) => env.AUTH_MICROSOFT_ENABLED)
+  AUTH_MICROSOFT_TENANT: string;
 }
 
 export const validate = (config: Record<string, unknown>): ConfigVariables => {

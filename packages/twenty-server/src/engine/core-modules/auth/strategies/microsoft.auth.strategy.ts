@@ -32,11 +32,13 @@ export type MicrosoftRequest = Omit<
 
 export class MicrosoftStrategy extends PassportStrategy(Strategy, 'microsoft') {
   constructor(twentyConfigService: TwentyConfigService) {
+    const tenant =
+      twentyConfigService.get('AUTH_MICROSOFT_TENANT') || 'common';
     super({
       clientID: twentyConfigService.get('AUTH_MICROSOFT_CLIENT_ID'),
       clientSecret: twentyConfigService.get('AUTH_MICROSOFT_CLIENT_SECRET'),
       callbackURL: twentyConfigService.get('AUTH_MICROSOFT_CALLBACK_URL'),
-      tenant: 'common',
+      tenant,
       scope: ['user.read'],
       passReqToCallback: true,
     });

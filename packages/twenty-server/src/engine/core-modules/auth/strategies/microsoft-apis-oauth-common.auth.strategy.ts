@@ -18,11 +18,13 @@ export class MicrosoftAPIsOauthCommonStrategy extends PassportStrategy(
 ) {
   constructor(twentyConfigService: TwentyConfigService) {
     const scopes = getMicrosoftApisOauthScopes();
+    const tenant =
+      twentyConfigService.get('AUTH_MICROSOFT_TENANT') || 'common';
 
     super({
       clientID: twentyConfigService.get('AUTH_MICROSOFT_CLIENT_ID'),
       clientSecret: twentyConfigService.get('AUTH_MICROSOFT_CLIENT_SECRET'),
-      tenant: 'common',
+      tenant,
       callbackURL: twentyConfigService.get('AUTH_MICROSOFT_APIS_CALLBACK_URL'),
       scope: scopes,
       passReqToCallback: true,
